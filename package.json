@@ -1,0 +1,8 @@
+{
+    "name": "com.thearkitect.thearkitectpackage",
+    "version": "0.0.1",
+    "displayName": "theArkitectPackage",
+    "description": "This is theArkitect Package",
+    "unity": "2018.1",
+    "unityRelease": "0b5"
+}
