@@ -1,3 +1,17 @@
 {
-	"name": "thearkitect.thearkitectpackage"
+    "name": "thearkitect.thearkitectpackage",
+    "rootNamespace": "",
+    "references": [
+        "i2Localize",
+        "I2_asm_Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
