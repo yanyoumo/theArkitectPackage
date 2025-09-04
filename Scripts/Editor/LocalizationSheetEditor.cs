@@ -44,7 +44,7 @@ namespace theArkitectPackage.Editor
     
     public sealed class LocalizationSheetEditor
     {
-        [FolderPath(ParentFolder = "Assets/"),OnValueChanged("LOC_RootPath_Updated")]
+        [FolderPath(),OnValueChanged("LOC_RootPath_Updated")]
         public string LOC_RootPath = "Assets/Editor/Root_Localization";
         
         [ShowInInspector]
