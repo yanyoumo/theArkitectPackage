@@ -50,7 +50,7 @@ namespace theArkitectPackage.Editor
 
         private LanguageSourceAsset MainLangSAsset => Resources.Load<LanguageSourceAsset>("I2Languages");
         private string LangTitle => string.Join(",", MainLangSAsset.SourceData.GetLanguages());
-        private string ChartTitle => string.Join(",", "Key", "Type", "Desc") + "," + LangTitle;
+        private string ChartTitle => string.Join(",", "Key", "Type", "Desc") + "," + LangTitle + ",";
         
         [ShowInInspector]
         public string LOC_RootPath_Total =>  localizationData.LOC_RootPath + "_TotalFile.csv";
