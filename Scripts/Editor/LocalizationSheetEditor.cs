@@ -40,6 +40,7 @@ namespace theArkitectPackage.Editor
         public const string LOC_ComplexStory_LangPosfix_SimpChinese = "zh";
         public const string LOC_ComplexStory_LangPosfix_TradChinese = "zht";
         public const string LOC_ComplexStory_LangPosfix_English = "en";
+        public const string LOC_ComplexStory_LangPosfix_Japanese = "jp";
       }
     
     public sealed class LocalizationSheetEditor
@@ -122,8 +123,7 @@ namespace theArkitectPackage.Editor
                 return;
             }
             
-            var title = string.Join(",", "Key", "Type", "Desc", "Chinese (Simplified)", "Chinese (Traditional)", "English", "");
-            sw.WriteLine(title);
+            sw.WriteLine(ChartTitle);
             
             foreach (var s in scrContent)
             {
@@ -458,8 +458,7 @@ namespace theArkitectPackage.Editor
                 return;
             }
 
-            var title = string.Join(",", "Key", "Type", "Desc", "Chinese (Simplified)", "Chinese (Traditional)", "English");
-            sw.WriteLine(title);
+            sw.WriteLine(ChartTitle);
             
             sw.Close();
             FileProcessorWrapper.ProcessAllFileWithinSubFolder(ROOT_LocalizationRootPath, s=>CopyNPasteCSVToTarget(s,targetPath,doReplace), new List<string> { "csv" });
@@ -579,12 +578,6 @@ namespace theArkitectPackage.Editor
             i2LocWrapper.AddAllComicStoryDecoTerm();
             EditorUtility.SetDirty(MainLangSAsset);
             AssetDatabase.SaveAssets();
-        }
-
-        [Button]
-        public void Test()
-        {
-            Debug.Log(ChartTitle);
         }
 
         [PropertySpace]
