@@ -19,11 +19,6 @@ namespace theArkitectPackage.Editor
         public static string PLAYER_APPDATA => Application.persistentDataPath;
         public static string PLAYER_APPDATA_COMPANY => Directory.GetParent(Application.persistentDataPath)?.FullName;
 
-        public const string LOC_RootPath = "Assets/Editor/Root_Localization";
-        public const string LOC_RootPath_Total = "Assets/Editor/Root_Localization_TotalFile.csv";
-        public const string LOC_RootPath_TmpTotal = "Assets/Editor/Root_Localization_TotalFile_Tmp.csv";
-        public const string LOC_ComplexStoryPath = "Assets/Resources/ComplexStory";
-
         public const string LOC_TermAlt_Suffix_PC = "";//需要留空，方便算法
         public const string LOC_TermAlt_Suffix_Contoller = "_controller";
         public const string LOC_TermAlt_Suffix_Mouse = "_mouse";
@@ -45,10 +40,20 @@ namespace theArkitectPackage.Editor
         public const string LOC_ComplexStory_LangPosfix_SimpChinese = "zh";
         public const string LOC_ComplexStory_LangPosfix_TradChinese = "zht";
         public const string LOC_ComplexStory_LangPosfix_English = "en";
-    }
+      }
     
     public sealed class LocalizationSheetEditor
     {
+        [FolderPath(ParentFolder = "Assets/")]
+        public string LOC_RootPath = "Assets/Editor/Root_Localization";
+        
+        [ShowInInspector]
+        public string LOC_RootPath_Total => LOC_RootPath + "_TotalFile.csv";
+        [ShowInInspector]
+        public string LOC_RootPath_TmpTotal => LOC_RootPath + "_TotalFile_Tmp.csv";
+        [ShowInInspector]
+        public string LOC_ComplexStoryPath => "Assets/Resources/ComplexStory";
+        
         private void DisplayFilePath(string path)
         {
             Debug.Log(path);
@@ -131,7 +136,7 @@ namespace theArkitectPackage.Editor
             StreamReader sr;
             try
             {
-                sr = new StreamReader(StaticName.LOC_RootPath_Total, Encoding.UTF8);
+                sr = new StreamReader(LOC_RootPath_Total, Encoding.UTF8);
             }
             catch (IOException)
             {
@@ -362,7 +367,7 @@ namespace theArkitectPackage.Editor
             }
         }
 
-        [ShowInInspector] public string ROOT_LocalizationRootPath => StaticName.LOC_RootPath;
+        [ShowInInspector] public string ROOT_LocalizationRootPath => LOC_RootPath;
 
         private int tempCounter=0;
         
@@ -427,12 +432,12 @@ namespace theArkitectPackage.Editor
 
         public void WriteAllCSVToWriteableFile()
         {
-            WriteAllCSVToWriteableFile_Core(StaticName.LOC_RootPath_Total, false);
+            WriteAllCSVToWriteableFile_Core(LOC_RootPath_Total, false);
         }
         
         public void WriteAllCSVToWriteableFile_Tmp()
         {
-            WriteAllCSVToWriteableFile_Core(StaticName.LOC_RootPath_TmpTotal);
+            WriteAllCSVToWriteableFile_Core(LOC_RootPath_TmpTotal);
         }
 
         // [Button]
@@ -527,7 +532,7 @@ namespace theArkitectPackage.Editor
         public void ReplaceAllTermsFromCSVTotal()
         {
             i2LocWrapper.RemoveAllTextTerms();
-            ReadCSVFrom_Resources_AddTerm(StaticName.LOC_RootPath_Total);
+            ReadCSVFrom_Resources_AddTerm(LOC_RootPath_Total);
             EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
             AssetDatabase.SaveAssets();
         }
@@ -546,8 +551,8 @@ namespace theArkitectPackage.Editor
             FixAllTermsFromCSV();
             WriteAllCSVToWriteableFile_Tmp();
             i2LocWrapper.RemoveAllTextTerms();
-            ReadCSVFrom_Resources_AddTerm(StaticName.LOC_RootPath_TmpTotal);
-            File.Delete(StaticName.LOC_RootPath_TmpTotal);
+            ReadCSVFrom_Resources_AddTerm(LOC_RootPath_TmpTotal);
+            File.Delete(LOC_RootPath_TmpTotal);
             EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
             AssetDatabase.SaveAssets();
         }
@@ -557,7 +562,7 @@ namespace theArkitectPackage.Editor
         public void ReplaceAllComplexStoryFromRES()
         {
             i2LocWrapper.RemoveAllComplexStoryTerms_Simple();
-            i2LocWrapper.AddAllComplexStoryTerm();
+            i2LocWrapper.AddAllComplexStoryTerm(LOC_ComplexStoryPath);
             EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
             AssetDatabase.SaveAssets();
         }

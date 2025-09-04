@@ -37,10 +37,10 @@ namespace theArkitectPackage.Editor
             return str;
         }
         
-        public static string[] ListAllComplexStoryTerms()
+        public static string[] ListAllComplexStoryTerms(string storyPath)
         {
             var res = new List<string>();
-            string[] fileEntries = Directory.GetFiles(StaticName.LOC_ComplexStoryPath);
+            string[] fileEntries = Directory.GetFiles(storyPath);
             foreach (string fileName in fileEntries)
             {
                 var soloFileName = fileName.Split("\\").Last();
@@ -148,9 +148,9 @@ namespace theArkitectPackage.Editor
             }
         }
         
-        public static void AddAllComplexStoryTerm()
+        public static void AddAllComplexStoryTerm(string storyPath)
         {
-            foreach (var complexStoryTerm in ListAllComplexStoryTerms())
+            foreach (var complexStoryTerm in ListAllComplexStoryTerms(storyPath))
             {
                 AddComplexStoryTerm(complexStoryTerm);
             }
