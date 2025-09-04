@@ -44,13 +44,13 @@ namespace theArkitectPackage.Editor
     
     public sealed class LocalizationSheetEditor
     {
-        [FolderPath(ParentFolder = "Assets/")]
+        [FolderPath(ParentFolder = "Assets/"),OnValueChanged("LOC_RootPath_Updated")]
         public string LOC_RootPath = "Assets/Editor/Root_Localization";
         
         [ShowInInspector]
-        public string LOC_RootPath_Total => LOC_RootPath + "_TotalFile.csv";
+        public string LOC_RootPath_Total =>  localizationData.LOC_RootPath + "_TotalFile.csv";
         [ShowInInspector]
-        public string LOC_RootPath_TmpTotal => LOC_RootPath + "_TotalFile_Tmp.csv";
+        public string LOC_RootPath_TmpTotal =>  localizationData.LOC_RootPath + "_TotalFile_Tmp.csv";
         [ShowInInspector]
         public string LOC_ComplexStoryPath => "Assets/Resources/ComplexStory";
         
@@ -582,6 +582,32 @@ namespace theArkitectPackage.Editor
         public void CheckAllCSVFromDoubleDQM()
         {
             FileProcessorWrapper.ProcessAllFileWithinSubFolder(ROOT_LocalizationRootPath, CheckHasDoubleDQM_OtherThanEmptyString_Debug, new List<string> { "csv" });
+        }
+
+        private void LOC_RootPath_Updated()
+        {
+            localizationData.LOC_RootPath = LOC_RootPath;
+            EditorUtility.SetDirty(localizationData);
+            AssetDatabase.SaveAssets();
+        }
+        
+        private LocalizationData localizationData;
+        public LocalizationSheetEditor()
+        {
+            Debug.Log("LocalizationSheetEditor");
+            var existingSystemObjects = Resources.FindObjectsOfTypeAll<LocalizationData>();
+            if (existingSystemObjects.Any())
+            {
+                localizationData = existingSystemObjects[0];
+            }
+            else
+            {
+                localizationData = ScriptableObject.CreateInstance<LocalizationData>();
+                AssetDatabase.CreateAsset(localizationData, "Assets/Resources/i2HelperData.asset");
+                EditorUtility.SetDirty(localizationData);
+            }
+
+            LOC_RootPath = localizationData.LOC_RootPath;
         }
     }
 }
