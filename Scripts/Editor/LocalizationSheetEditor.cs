@@ -46,6 +46,10 @@ namespace theArkitectPackage.Editor
     {
         [FolderPath(),OnValueChanged("LOC_RootPath_Updated")]
         public string LOC_RootPath = "Assets/Editor/Root_Localization";
+
+        private LanguageSourceAsset MainLangSAsset => Resources.Load<LanguageSourceAsset>("I2Languages");
+        private string LangTitle => string.Join(",", MainLangSAsset.SourceData.GetLanguages());
+        private string ChartTitle => string.Join(",", "Key", "Type", "Desc") + "," + LangTitle;
         
         [ShowInInspector]
         public string LOC_RootPath_Total =>  localizationData.LOC_RootPath + "_TotalFile.csv";
@@ -377,7 +381,7 @@ namespace theArkitectPackage.Editor
             // var number;
             tempCounter = 0;
             // FileProcessorWrapper.ProcessAllFileWithinSubFolder(ROOT_LocalizationRootPath, CountAllTermsCharacters, new List<string> { "csv" });
-            var srcData = Resources.Load<LanguageSourceAsset>("I2Languages");
+            var srcData = MainLangSAsset;
             foreach (var s in srcData.SourceData.GetTermsList())
             {
                 var t=srcData.SourceData.GetTranslation(s);
@@ -454,7 +458,7 @@ namespace theArkitectPackage.Editor
                 return;
             }
 
-            var title = string.Join(",", "Key", "Type", "Desc", "Chinese (Simplified)", "Chinese (Traditional)", "English", "");
+            var title = string.Join(",", "Key", "Type", "Desc", "Chinese (Simplified)", "Chinese (Traditional)", "English");
             sw.WriteLine(title);
             
             sw.Close();
@@ -499,7 +503,7 @@ namespace theArkitectPackage.Editor
         //         }
         //     }
         //     
-        //     EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
+        //     EditorUtility.SetDirty(MainLangSAsset);
         //     AssetDatabase.SaveAssets();
         //     EditorUtility.ClearProgressBar();
         // }
@@ -533,7 +537,7 @@ namespace theArkitectPackage.Editor
         {
             i2LocWrapper.RemoveAllTextTerms();
             ReadCSVFrom_Resources_AddTerm(LOC_RootPath_Total);
-            EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
+            EditorUtility.SetDirty(MainLangSAsset);
             AssetDatabase.SaveAssets();
         }
         [Button]
@@ -553,7 +557,7 @@ namespace theArkitectPackage.Editor
             i2LocWrapper.RemoveAllTextTerms();
             ReadCSVFrom_Resources_AddTerm(LOC_RootPath_TmpTotal);
             File.Delete(LOC_RootPath_TmpTotal);
-            EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
+            EditorUtility.SetDirty(MainLangSAsset);
             AssetDatabase.SaveAssets();
         }
         
@@ -563,7 +567,7 @@ namespace theArkitectPackage.Editor
         {
             i2LocWrapper.RemoveAllComplexStoryTerms_Simple();
             i2LocWrapper.AddAllComplexStoryTerm(LOC_ComplexStoryPath);
-            EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
+            EditorUtility.SetDirty(MainLangSAsset);
             AssetDatabase.SaveAssets();
         }
 
@@ -573,8 +577,14 @@ namespace theArkitectPackage.Editor
         {
             i2LocWrapper.RemoveAllComplexStoryTerms_ComicDeco();
             i2LocWrapper.AddAllComicStoryDecoTerm();
-            EditorUtility.SetDirty(Resources.Load<LanguageSourceAsset>("I2Languages"));
+            EditorUtility.SetDirty(MainLangSAsset);
             AssetDatabase.SaveAssets();
+        }
+
+        [Button]
+        public void Test()
+        {
+            Debug.Log(ChartTitle);
         }
 
         [PropertySpace]
