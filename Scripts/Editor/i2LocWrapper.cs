@@ -17,19 +17,19 @@ namespace theArkitectPackage.Editor
             if (!TextProcessHelper.CheckIllegalComma(str))
             {
                 Debug.LogError("String "+str+" contain English comma please Fix!:" + LogPostfix);
-                return "ORIGINAL WORD CONTAINS ILLEGAL COMMA";
+                return "ORIGINAL WORD CONTAINS ILLEGAL COMMA.";
             }
             
             if (!TextProcessHelper.CheckDoubleQuotationMarksInPairs(str))
             {
                 Debug.LogError("String "+str+" contain not in pair DQM FIX!:" + LogPostfix);
-                return "ORIGINAL WORD DQM NOT IN PAIR";
+                return "ORIGINAL WORD DQM NOT IN PAIR.";
             }
 
             if (!TextProcessHelper.CheckIllegalLineReturn(str))
             {
                 Debug.LogError("String "+str+" contain Illegal Line Return FIX!:" + LogPostfix);
-                return "ORIGINAL WORD CONTAIN ILLEGAL LINE RETURN";
+                return "ORIGINAL WORD CONTAIN ILLEGAL LINE RETURN.";
             }
 
             str = str.Replace("\"", "#@#");
