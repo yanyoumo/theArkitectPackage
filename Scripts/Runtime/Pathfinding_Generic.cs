@@ -190,7 +190,7 @@ namespace theArkitectPackage.Mathmetic.Pathfinding_Generic
                 }
             } while (frontier.Count != 0);
 
-            Debug.Log("LOOPED@loopCounter=" + loopCounter);
+            // Debug.Log("LOOPED@loopCounter=" + loopCounter);
             cachedMapData.CompletedIsland |= (oldCacheMapDataCount == cachedMapData.Count);
             return cachedMapData.TryTraceBack(end, out foundPath); //这里应该是不会有问题，一定能找到路线。
         }
